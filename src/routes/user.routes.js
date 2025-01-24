@@ -2,6 +2,7 @@ import { Router } from "express";
 import { registerUser } from "../controllers/user.controller.js";
 
 import { upload } from "../middlewares/multer.middlewares.js";
+import { ApiError } from "../utils/ApiError.js";
 
 const router = Router()
 
@@ -13,7 +14,7 @@ router.route("/register").post(
             maxCount: 1
         },
         {
-            name: "converImage",
+            name: "coverImage",
             maxCount: 1
         }
     ]),
