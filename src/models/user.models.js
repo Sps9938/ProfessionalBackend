@@ -63,7 +63,7 @@ userSchema.pre("save", async function (next) {
         if(!this.isModified("password")) return next();
     
         this.password = await bcrypt.hash(this.password, 10)
-        console.log("Hashed password in pre-save:", this.password);
+        // console.log("Hashed password in pre-save:", this.password);
     
         next();
     } catch (error) {
@@ -80,7 +80,8 @@ userSchema.methods.isPasswordCorrect = async function (password) {
     
     // console.log("Stored password hash in DB:",this.password);
     
-    const result = password === this.password
+    // const result = password === this.password
+    const result = await bcrypt.compare(password, this.password)
 
     // console.log(`result is: ${result}`);
     

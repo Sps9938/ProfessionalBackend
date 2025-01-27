@@ -12,8 +12,8 @@ import {User} from "../models/user.models.js"
 
 export const verifyJWT = asyncHandler (async (req, _, next) => {
     // console.log("Entry in Authorization middleware");
-    
-    
+    // console.log(req.cookies.refreshToken);
+    // console.log(req.cookies.accessToken);
     try {
         const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer", "").trim()
         // console.log(token);
