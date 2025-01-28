@@ -20,12 +20,12 @@ app.use(express.static("public"))
 app.use(cookieParser())
 
  //routes import
- import { router as userRouter } from './routes/user.routes.js'; // Named import
+ import { router } from './routes/user.routes.js'; // Named import
 
 
 
  //routes declaration
- app.use("/api/v1/users", userRouter)
+ app.use("/api/v1/users", router)
 
 //  http://localhost:8000/api/v1/users/register
 

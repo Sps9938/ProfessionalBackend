@@ -277,9 +277,82 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     }
 
 })
+
+const changeCurrentPassword = asyncHandler(async (req, res) => {
+    const {oldPassword, newPassword, renewPassword} = req.body
+    if(newPassword !== renewPassword )
+    {
+        throw new ApiError(401, "newPassword is not Match with renewPassword")
+    }
+    const user = await User.findById(req.user?._id)
+    
+    // console.log(user);
+    
+    // console.log("user object has generated Successfully");
+    
+
+    //to check user object->password and refreshtoeken are not mentioned
+    if(!user)
+    {
+        throw new ApiError(401, "User Not Found")
+    }
+    const isPasswordCorrect = await user.isPasswordCorrect(oldPassword)
+    if(!isPasswordCorrect)
+    {
+        throw new ApiError(401, "Invalid old Password")
+
+    }
+    user.password = newPassword
+
+    await user.save({validateBeforeSave: false})
+
+    return res
+    .status(200)
+    .json(new ApiResponse(
+        200,
+        {},
+        "Password changed Sucessfully"
+    ))
+})
+
+//khud sai forget Password ka controller banao
+const forgetPassword = asyncHandler(async(req, res) => {
+    const {username, email, newPassword,renewPassword} = req.body
+    // if(!user && !email)
+    if(!(username || email))
+    {
+        throw new ApiError(401, "username or email required")
+    }
+    //check user or email match with user Database
+    const user = await User.findById(req.user?._id)
+    if(!((user.username === username) || (user.email === email)))
+    {
+        throw new ApiError(401, "User Not Found,Enter Corret username or email")
+    }
+
+    if(newPassword !== renewPassword)
+    {
+        throw new ApiError(401, "oldPassword is not Match with renewPassword")
+    }
+    //this line indicate that ,you should carry to change your currentPassword
+    user.password = newPassword
+
+    user.save({validateBeforeSave: false})
+
+    return res
+    .status(200)
+    .json( new ApiResponse(
+        200,
+        {},
+        "User changed Password Successfull with the help of ForgetPassword"
+    ))
+
+})
 export {
     registerUser,
     loginUser,
     logoutUser,
-    refreshAccessToken
+    refreshAccessToken,
+    changeCurrentPassword,
+    forgetPassword
 }
