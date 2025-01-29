@@ -411,6 +411,8 @@ const updateUserAvatar = asyncHandler(async(req, res) =>{
     {
         throw new ApiError(400, "Avatar files is not Uploading on Cloudinnary")
     }
+
+    
     await User.findByIdAndUpdate(
         req.user?._id,
         {
