@@ -458,11 +458,25 @@ const updatecoverImage = asyncHandler(async (req, res) => {
 
 /*add aggrigate pipelines */
 const getUserChannelProfile = asyncHandler(async (req, res) => {
-    const { username } = req.params
+    /*
+        1. Finds a user based on their username.
+        2. Counts how many people subscribed to their channel.
+        3. Counts how many channels they are subscribed to.
+        4. Checks if the logged-in user is subscribed.
+        5. Returns only relevant user profile data.
+    */
+   /* ansother approach throw body */
+    // const user = await User.findById(req.user?._id)
+    // if (!user) {
+    //     throw new ApiError(401, "User Not Found")
+    // }
+    // const username = user.username
+    const {username} = req.params
+    // console.log(req.params);
+    
     if (!username?.trim()) {
         throw new ApiError(400, "Username is missing")
     }
-
     const channel = await User.aggregate([
         //check username is availble or not
         {
@@ -478,7 +492,7 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
                 localField: "_id",
                 //check where you want to searching
                 foreignField: "channel",
-                as: "subsribers"
+                as: "subscribers"
 
             }
 
@@ -494,14 +508,14 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
         {
             $addFields: {
                 countSubscribers: {
-                    $size: "$subsribers"
+                    $size: "$subscribers"
                 },
                 countSubscribedTo: {
                     $size: "$subscribedTo"
                 },
                 isSubscribed: {
                     $cond: {
-                        if: { $in: [req.user?._id, "$subsribers.subscriber"] },
+                        if: { $in: [req.user?._id, "$subscribers.subscriber"] },
                         then: true,
                         else: false
                     }
@@ -516,7 +530,7 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
                 countSubscribedTo: 1,
                 isSubscribed: 1,
                 avatar: 1,
-                coveImage: 1,
+                coverImage: 1,
                 email: 1
 
             }
@@ -524,9 +538,11 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
 
 
     ])
+    // console.log(channel);
+
 
     if (!channel?.length) {
-        throw new ApiError(400, "Channel doesn't exist")
+        throw new ApiError(400, "Channel does not exist")
     }
 
     return res
@@ -543,9 +559,19 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
 })
 
 const getWatchHistory = asyncHandler(async (req, res) => {
+    /*
+        1. Identifies the logged-in user (viewer).
+        2. Finds all videos the user has watched.
+        3. Retrieves details of each watched video.
+        4. Fetches uploader details for each video.
+        5. Formats the uploader’s details properly.
+        6. Returns the structured watch history.
+    */
     const user = await User.aggregate([
         {
             $match: {
+
+                // it checcks the viewer id
                 _id: new mongoose.Types.ObjectId(req.user._id)
 
             },
@@ -555,14 +581,14 @@ const getWatchHistory = asyncHandler(async (req, res) => {
             $lookup: {
                 from: "videos",
                 localField: "watchHistory",
-                foreignField: "_id",
+                foreignField: "_id",//it is video id->proviedes unique id by mongoose
                 as: "watchHistory",
                 pipeline: [
                     {
                         $lookup: {
                             from: "user",
                             localField: "owner",
-                            foreignField: "_id",
+                            foreignField: "_id",//uploader's id
                             as: "owner",
                             pipeline: [
                                 {
