@@ -60,4 +60,4 @@ router.route("/update-coverImage").patch(
 router.route("/c/:username").get(verifyJWT, getUserChannelProfile)
 
 router.route("/history").get(verifyJWT, getWatchHistory)
-export { router }
+export default router;
