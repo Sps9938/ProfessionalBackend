@@ -2,6 +2,8 @@ import { v2 as cloudinary } from "cloudinary"
 import { response } from "express";
 
 import fs from "fs"
+import { asyncHandler } from "./asyncHandler.js";
+import { ApiError } from "./ApiError.js";
 
 // import path from "path"
 
@@ -36,4 +38,27 @@ const uploadOnCloudinary = async (localFilePath) => {
     }
 }
 
-export {uploadOnCloudinary}
+const deleteOnCloudinary = async (deleteFilePath) => {
+    try {
+        if(!deleteFilePath) return null;
+
+        //delete file from cloudinary
+        const deletResponse = await cloudinary.uploader.destroy(deleteFilePath, {
+            resource_type: "auto"
+        })
+        return deletResponse;
+        
+    } catch (error) {
+        
+        return error;
+        throw new ApiError(400, "delete on coludinary failed")
+        // console.log("delete on cloudinary failed");
+        
+        
+    }
+}
+
+export {
+    uploadOnCloudinary,
+    deleteOnCloudinary
+}
