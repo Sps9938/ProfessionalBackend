@@ -148,9 +148,9 @@ const addVideoOnPlaylist = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Video Not Found on Videos Collections")
     }
 
-   
-    
-    
+
+
+
     if (!(playlist?.owner.toString() && video?.owner.toString())) {
         throw new ApiError(400, "playlist and video both owner is requried")
     }
@@ -214,8 +214,8 @@ const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
 
     // console.log(playlist?.owner.toString());
     // console.log(video?.owner.toString());
-    
-    
+
+
     // const check = playlist?.owner.toString() && video?.owner.toString()
     // console.log(check);
 
@@ -234,14 +234,14 @@ const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
         {
             $pull: {
                 videos: videoId
-    //$pull Operator
+                //$pull Operator
 
-    /* 
-        $pull is a MongoDB update operator used to remove specific elements from an array.
-
-        It removes all instances of videoId from the videos array in the playlist document.
+                /* 
+                    $pull is a MongoDB update operator used to remove specific elements from an array.
             
-    */
+                    It removes all instances of videoId from the videos array in the playlist document.
+                        
+                */
             }
         },
         { new: true }
@@ -264,40 +264,38 @@ const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
 
 })
 
-const getPlaylistById = asyncHandler(async(req, res) => {
+const getPlaylistById = asyncHandler(async (req, res) => {
     //get playlistId
     //check valid playlistId
     //used pipeline stages
-        /*
-            1. $match->if true ->collect all information on playlistId
-            2. $lookup->
-                1. from-> playlist
-                2. loacalfiedl-> 
-                3. foreignfield->
-        */
+    /*
+        1. $match->if true ->collect all information on playlistId
+        2. $lookup->
+            1. from-> playlist
+            2. loacalfiedl-> 
+            3. foreignfield->
+    */
 
 
 
     const { playlistId } = req.params
-    if(!isValidObjectId(playlistId))
-    {
+    if (!isValidObjectId(playlistId)) {
         throw new ApiError(400, "Invalid PlaylistId")
     }
 
     const playlist = await Playlist.findById(playlistId)
 
-    if(!playlist)
-    {
+    if (!playlist) {
         throw new ApiError(400, "Playlist not Found")
     }
 
     const playlistVideos = await Playlist.aggregate([
-         {
+        {
             $match: {
                 _id: new mongoose.Types.ObjectId(playlistId)
             }
         },
-     
+
         {
             $lookup: {
                 from: "videos",
@@ -360,22 +358,83 @@ const getPlaylistById = asyncHandler(async(req, res) => {
         }
 
     ])
-   if(!playlistVideos.length)
-   {
-    throw new ApiError(400, "No playlist data found")
-   }
-    
+    if (!playlistVideos.length) {
+        throw new ApiError(400, "No playlist data found")
+    }
+
+    return res
+        .status(200)
+        .json(new ApiResponse(
+            200,
+            playlistVideos[0],
+            "playlist Fetched Successfully"
+        ))
+})
+
+const getUserPlaylists = asyncHandler(async (req, res) => {
+    //get userId
+    //check valid userId
+    //using  pipeline stages
+    const { userId } = req.params
+
+    if (!isValidObjectId(userId)) {
+        throw new ApiError(400, "Invalid userId")
+    }
+
+    const playlists = await Playlist.aggregate([
+        {
+            $match: {
+                owner: new mongoose.Types.ObjectId(userId)
+                //here owner id check with userid
+            }
+        },
+        {
+            $lookup: {
+                from: "videos",            // The collection we are joining with (Videos collection)
+                localField: "videos",      // Field in the Playlist collection (array of video IDs)
+                foreignField: "_id",       // Field in the Videos collection (video's unique _id)
+                as: "videos"           // The resulting array of matched video documents
+            }
+        },
+        {
+            $addFields: {
+                totalVideos: {
+                    $size: "$videos"
+                },
+                totalViews: {
+                    $sum: "$videos.views"
+                }
+            }
+        },
+        {
+            $project: {
+                _id: 1,
+                name: 1,
+                description: 1,
+                totalVideos: 1,
+                totalViews: 1,
+                updatedAt: 1
+            }
+        }]
+
+
+    )
+    if(!playlists.length)
+    {
+        throw new ApiError(400, "Failed to Fetched Playlist")
+    }
     return res
     .status(200)
     .json(new ApiResponse(
         200,
-        playlistVideos[0],
-        "playlist Fetched Successfully"
+        playlists,
+        "User Playlist Fetched Successfully"
+
     ))
+
 })
 
 
-  
 
 export {
     createPlaylist,
@@ -383,5 +442,6 @@ export {
     deletePlaylist,
     addVideoOnPlaylist,
     removeVideoFromPlaylist,
-    getPlaylistById
+    getPlaylistById,
+    getUserPlaylists
 }
