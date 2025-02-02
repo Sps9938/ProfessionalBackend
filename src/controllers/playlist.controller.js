@@ -267,7 +267,6 @@ const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
 const getPlaylistById = asyncHandler(async(req, res) => {
     //get playlistId
     //check valid playlistId
-    //check playlist-> onwer id match with user id
     //used pipeline stages
         /*
             1. $match->if true ->collect all information on playlistId
