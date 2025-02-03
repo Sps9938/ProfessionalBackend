@@ -238,7 +238,7 @@ const getVideoById = asyncHandler(async (req, res) => {
     //5. return response
 
     //step 1
-    console.log(videoId);
+    // console.log(videoId);
 
     if (!isValidObjectId(videoId)) {
         throw new ApiError(400, "VideoId is not Extis")
@@ -300,8 +300,7 @@ const getVideoById = asyncHandler(async (req, res) => {
                             isSubscribed: {
                                 $cond: {
                                     if: {
-                                        $in: [
-                                            req.user?._id,
+                                        $in: [req.user?._id,
                                             "$subscribers.subscriber"]
                                     },
                                     then: true,
@@ -362,9 +361,11 @@ const getVideoById = asyncHandler(async (req, res) => {
         }
     ])
 
-    if (!video) {
-        throw new ApiError(500, "failed to fetch video on server site, please try againg")
+    if (!video.length) {
+        throw new ApiError(500, "failed to fetch video on server site, please try again")
     }
+    // console.log(video[0]);
+    
     //update views and watchHistory
     await Video.findByIdAndUpdate(
         videoId,
