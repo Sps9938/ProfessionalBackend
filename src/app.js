@@ -28,11 +28,14 @@ app.use(cookieParser())
 
  import likedRouter from "./routes/like.routes.js"
 
+ import commentedRouter from "./routes/comment.routes.js"
+
  //routes declaration
  app.use("/api/v1/users", userRouter);
  app.use("/api/v1/video", videoRouter);
  app.use("/api/v1/playlist", playlistRouter);
  app.use("/api/v1/likes", likedRouter)
+ app.use("/api/v1/comments", commentedRouter)
 
 //  http://localhost:8000/api/v1/users/register
 
