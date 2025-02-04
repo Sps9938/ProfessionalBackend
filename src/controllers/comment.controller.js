@@ -204,7 +204,9 @@ const getVideoCommets = asyncHandler(async (req, res) => {
     const comments = await Comment.aggregatePaginate(commentsAggregate, options)
 
     // console.log(comments.page);
-    if (!comments.page) {
+    // console.log(comments.totalDocs);
+    
+    if (!comments.totalDocs) {
         throw new ApiError(500, "Failed to get video comments please try again")
     }
 
