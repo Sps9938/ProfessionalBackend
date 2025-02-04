@@ -17,7 +17,7 @@ router.use(verifyJWT)
 
 router.route("/toggle/like/:videoId").patch(toggleVideoLike)
 
-router.route("/toggle/comment/like/:commetId").patch(toggleCommentLike)
+router.route("/toggle/like/comment/:commentId").patch(toggleCommentLike)
 
 router.route("/toggle/like/tweet/:tweetId").patch(toggleTweetLike)
 

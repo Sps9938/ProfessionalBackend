@@ -3,7 +3,7 @@ import mongoose, { isObjectIdOrHexString } from "mongoose";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-
+import { Like } from "../models/like.models.js";
 import { Video } from "../models/video.models.js";
 const addComment = asyncHandler(async (req, res) => {
     //get videoId->which video that you want to comment
@@ -101,8 +101,7 @@ const deleteComment = asyncHandler(async (req, res) => {
     }
 
     const updateComment = await Comment.findByIdAndDelete(comment?._id)
-    if(!updateComment)
-    {
+    if (!updateComment) {
         throw new ApiError(400, "comment Deleted Successfully")
     }
 
@@ -114,8 +113,113 @@ const deleteComment = asyncHandler(async (req, res) => {
             "comment Deleted Successfully"
         ))
 })
+
+const getVideoCommets = asyncHandler(async (req, res) => {
+    //get videoId
+    //check valid videoId
+    //used pipedline stages
+    const { videoId } = req.params
+    const { page = 1, limit = 10 } = req.query
+    if (!isObjectIdOrHexString(videoId)) {
+        throw new ApiError(400, "Invalid videoId")
+    }
+
+    const video = await Video.findById(videoId)
+    if (!video) {
+        throw new ApiError(400, "videoId Not Found")
+    }
+
+    const commentsAggregate = Comment.aggregate([
+        {
+            $match: {
+                video: new mongoose.Types.ObjectId(videoId)
+            }
+        },
+        {
+            $lookup: {
+                from: "users",
+                localField: "owner",
+                foreignField: "_id",
+                as: "owners"
+            }
+        },
+        {
+            $lookup: {
+                from: "likes",
+                localField: "_id",
+                foreignField: "comment",
+                as: "likes"
+            }
+        },
+        {
+            $addFields: {
+                likesCount: {
+                    $size: "$likes"
+                },
+                owner: {
+                    $first: "$owners"
+                },
+                isLiked: {
+                    $cond: {
+                        if: { $in: [req.user?._id, "$likes.likedBy"] },
+                        then: true,
+                        else: false
+                    }
+                }
+            }
+        },
+        {
+            $sort: {
+                createdAt: -1,
+
+            }
+        },
+        {
+            $project: {
+                content: 1,
+                createdAt: 1,
+                likesCount: 1,
+                owner: {
+                    username: 1,
+                    fullname: 1,
+                    avatar: 1
+
+                },
+                isLiked: 1
+            }
+        }
+    ])
+
+    // console.log((await commentsAggregate).length);
+    if (!(await commentsAggregate).length) {
+        throw new ApiError(500, "Failed to Aggregte pipeple")
+    }
+    const options = {
+        page: parseInt(page, 10),
+        limit: parseInt(limit, 10)
+    }
+
+
+
+    const comments = await Comment.aggregatePaginate(commentsAggregate, options)
+
+    // console.log(comments.page);
+    if (!comments.page) {
+        throw new ApiError(500, "Failed to get video comments please try again")
+    }
+
+    return res
+        .status(200)
+        .json(new ApiResponse(
+            200,
+            comments,
+            "comments Fetched Sucessfully"
+        ))
+})
+
 export {
     addComment,
     updateCommet,
-    deleteComment
+    deleteComment,
+    getVideoCommets
 }

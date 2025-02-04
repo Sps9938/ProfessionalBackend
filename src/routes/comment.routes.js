@@ -6,6 +6,7 @@ import { Router } from "express";
 import { 
     addComment,
     deleteComment,
+    getVideoCommets,
     updateCommet
  } from "../controllers/comment.controller.js";
 
@@ -19,4 +20,6 @@ router.route("/add/comment/:videoId").patch(addComment)
 router.route("/update/comment/:commentId").post(updateCommet)
 
 router.route("/delete/comment/:commentId").delete(deleteComment)
+
+router.route("/get/comments/video/:videoId").get(getVideoCommets)
 export default router

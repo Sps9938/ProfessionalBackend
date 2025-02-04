@@ -1,4 +1,5 @@
 import { Like } from "../models/like.models.js";
+import { Comment } from "../models/comment.models.js";
 import mongoose, { isValidObjectId } from "mongoose";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
@@ -68,27 +69,38 @@ const toggleCommentLike = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Invalid commentId")
     }
 
-    const likedAlready = await Like.findOne({
-        commeent: commentId,
-        likedBy: req.user?._id
-
-    })
-    if (likedBy) {
-        await Like.findByIdAndDelete(likedAlready?._id)
+   const comment = await Comment.findById(commentId)
+   if(!comment)
+   {
+    throw new ApiError(400, "commentId Not Found ")
+   }
+    const liked = await Like.findOne(
+        {
+            comment: commentId,
+            likedBy: req.user?._id
+        }
+    )
+   
+    // console.log(liked);
+    
+    if (liked) {
+        await Like.findByIdAndDelete(liked?._id)
 
         return res
             .status(200)
             .json(new ApiResponse(
                 200,
-                { isLiked: falae },
+                { isLiked: false },
                 "toggle CommentLiked Successfully"
             ))
     }
 
     const updateLike = await Like.create({
-        commeent: commentId,
+        comment: commentId,
         likedBy: req.user?._id
     })
+    // console.log("okay");
+    
     if (!updateLike) {
         throw new ApiError(500, "Failed to create commentLike plase try again")
     }
