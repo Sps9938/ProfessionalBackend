@@ -30,12 +30,15 @@ app.use(cookieParser())
 
  import commentedRouter from "./routes/comment.routes.js"
 
+
+ import subscribedRouter from "./routes/subscription.routes.js"
  //routes declaration
  app.use("/api/v1/users", userRouter);
  app.use("/api/v1/video", videoRouter);
  app.use("/api/v1/playlist", playlistRouter);
  app.use("/api/v1/likes", likedRouter)
  app.use("/api/v1/comments", commentedRouter)
+ app.use("/api/v1/subscription", subscribedRouter)
 
 //  http://localhost:8000/api/v1/users/register
 
