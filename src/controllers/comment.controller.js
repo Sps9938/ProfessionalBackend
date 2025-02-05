@@ -1,5 +1,5 @@
 import { Comment } from "../models/comment.models.js";
-import mongoose, { isObjectIdOrHexString } from "mongoose";
+import mongoose, { isValidObjectId } from "mongoose";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
@@ -12,7 +12,7 @@ const addComment = asyncHandler(async (req, res) => {
 
     const { videoId } = req.params
     const { content } = req.body
-    if (!isObjectIdOrHexString(videoId)) {
+    if (!isValidObjectId(videoId)) {
         throw new ApiError(400, "Invalid videoId")
     }
 
@@ -53,7 +53,7 @@ const updateCommet = asyncHandler(async (req, res) => {
     const { commentId } = req.params
     const { content } = req.body
 
-    if (!isObjectIdOrHexString(commentId)) {
+    if (!isValidObjectId(commentId)) {
         throw new ApiError(400, "Invalid commentId")
     }
 
@@ -92,7 +92,7 @@ const deleteComment = asyncHandler(async (req, res) => {
     //check validId
     //then delete the comment
     const { commentId } = req.params
-    if (!isObjectIdOrHexString(commentId)) {
+    if (!isValidObjectId(commentId)) {
         throw new ApiError(400, "Invalid commentId")
     }
     const comment = await Comment.findById(commentId)
@@ -120,7 +120,7 @@ const getVideoCommets = asyncHandler(async (req, res) => {
     //used pipedline stages
     const { videoId } = req.params
     const { page = 1, limit = 10 } = req.query
-    if (!isObjectIdOrHexString(videoId)) {
+    if (!isValidObjectId(videoId)) {
         throw new ApiError(400, "Invalid videoId")
     }
 

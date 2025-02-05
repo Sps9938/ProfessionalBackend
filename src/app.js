@@ -32,6 +32,8 @@ app.use(cookieParser())
 
 
  import subscribedRouter from "./routes/subscription.routes.js"
+
+ import dashboardRouter from "./routes/dashboard.routes.js"
  //routes declaration
  app.use("/api/v1/users", userRouter);
  app.use("/api/v1/video", videoRouter);
@@ -39,6 +41,7 @@ app.use(cookieParser())
  app.use("/api/v1/likes", likedRouter)
  app.use("/api/v1/comments", commentedRouter)
  app.use("/api/v1/subscription", subscribedRouter)
+ app.use("/api/v1/dashboard", dashboardRouter)
 
 //  http://localhost:8000/api/v1/users/register
 
