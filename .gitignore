@@ -5,8 +5,8 @@ CRD1CvsQtGoDMALTyeYiiOSXOpaTeXSVNnowElmPVSSSHY86GISGitCoqGPGGWTVimQMLHOLAdazigHS
  
  # Ignore everything
  *
- # But allow README.md
- !README.md
+ # But allow Readme.md
+ !Readme.md
 
 # Logs
 logs
