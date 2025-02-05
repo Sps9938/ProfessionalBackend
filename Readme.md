@@ -134,5 +134,5 @@ Contributions are welcome! Please fork this repository and submit a pull request
 ## Contact
 
 For questions or collaborations, feel free to reach out:
-- **Email**: your-email@example.com
+- **Email**: satya200prakash@gmail.com
 - **GitHub**: [github repository profile](https://github.com/Sps9938/YouTube-Clone-Backend)
