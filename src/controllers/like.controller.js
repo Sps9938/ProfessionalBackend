@@ -131,14 +131,14 @@ const toggleTweetLike = asyncHandler(async (req, res) => {
         likedBy: req.user?._id
 
     })
-    if (likedBy) {
+    if (likedAlready) {
         await Like.findByIdAndDelete(likedAlready?._id)
 
         return res
             .status(200)
             .json(new ApiResponse(
                 200,
-                { isLiked: falae },
+                { isLiked: false },
                 "toggle tweetLiked Successfully"
             ))
     }

@@ -34,6 +34,12 @@ app.use(cookieParser())
  import subscribedRouter from "./routes/subscription.routes.js"
 
  import dashboardRouter from "./routes/dashboard.routes.js"
+
+ import tweetRouter from "./routes/tweet.routes.js"
+ app.use("/api/v1/tweet", tweetRouter)
+
+ import healthcheckRouter from "./routes/healthcheck.routes.js"
+ app.use("/api/v1/healthCheck", healthcheckRouter)
  //routes declaration
  app.use("/api/v1/users", userRouter);
  app.use("/api/v1/video", videoRouter);
@@ -42,6 +48,7 @@ app.use(cookieParser())
  app.use("/api/v1/comments", commentedRouter)
  app.use("/api/v1/subscription", subscribedRouter)
  app.use("/api/v1/dashboard", dashboardRouter)
+
 
 //  http://localhost:8000/api/v1/users/register
 
