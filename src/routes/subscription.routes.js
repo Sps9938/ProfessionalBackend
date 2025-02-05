@@ -1,4 +1,6 @@
 import { 
+    getsubscribedChannels,
+    getUserChannelSubscribers,
     toggleSubscription
 } from "../controllers/subscription.controller.js"
 
@@ -12,5 +14,9 @@ router.use(verifyJWT);
 
 
 router.route("/toggle/subscription/:channelId").patch(toggleSubscription)
+
+router.route("/get/user/subscribers/:channelId").get(getUserChannelSubscribers)
+
+router.route("/get/subscribed/channels/:subscriberId").get(getsubscribedChannels)
 
 export default router;
