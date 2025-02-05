@@ -37,8 +37,9 @@ Environment Variables: dotenv
 
 
 # 📂 Folder Structure
+![image Description](assets/structure.jpg)
 
-YouTube-Clone-Backend/
+<!-- YouTube-Clone-Backend/
 │-- src/
 │   ├── controllers/      # Handles business logic
 │   ├── models/           # Mongoose schemas
@@ -49,7 +50,7 @@ YouTube-Clone-Backend/
 │-- .env                  # Environment variables
 │-- app.js                # controll the port (http://localhost:..../api/v1/users/controllers):
 │-- index.js              # Entry point
-│-- package.json          # Dependencies
+│-- package.json          # Dependencies -->
 
 # ⚙ Installation & Setup
 
