@@ -1,79 +1,138 @@
-# YOUTUBE-CLONE-BACKEND
-
+# YouTube-Clone-Backend
 This is a vieio series on backedn with javascript
 -[Model link](https://app.eraser.io/workspace/YtPqZ1VogxGy1jzIDkzj)
 
+## Project Overview
 
-# 📌 Overview
+This project is a backend implementation of a YouTube-like platform. It provides core functionalities for managing users, videos, comments, likes, and subscriptions. The application is built to handle robust API interactions, ensuring scalability and reliability.
 
-# This is the backend of a YouTube clone built using the MERN stack. It provides RESTful APIs to handle user authentication, video uploads, comments, likes, subscriptions, and more.
+## Features
 
-# 🚀 Features
+- **User Authentication and Authorization**:
+    - Sign-up and login with hashed passwords.
+    - Role-based access control (Admin, Creator, Viewer).
 
-User Authentication (Signup, Login, Logout, JWT Authentication)
+- **Video Management**:
+    - Upload, update, and delete videos.
+    - Stream videos efficiently.
 
-Video Upload & Management (CRUD operations)
+- **Comment and Like System**:
+    - Add, edit, and delete comments on videos.
+    - Like and dislike functionality with counts.
 
-Like, Dislike, Comment on Videos
+- **Subscription System**:
+    - Users can subscribe to channels (creators).
+    - Notifications for new video uploads by subscribed channels.
 
-Subscription System
+- **Search and Filter**:
+    - Search videos by title, description, or tags.
+    - Filter videos by upload date, popularity, and category.
 
-Video Streaming Support
+## Tech Stack
 
-User Profile & Channel Management
+### Backend
+- **Framework**: Node.js with Express.js
+- **Database**: MongoDB for data storage
+- **Authentication**: JSON Web Tokens (JWT)
+- **Storage**: AWS S3 for video storage
+- **Real-time Notifications**: Socket.IO
+
+### Development Tools
+- **Environment Management**: dotenv
+- **Testing**: Jest and Supertest
+- **Code Linting**: ESLint with Prettier
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/youtube-backend.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd youtube-backend
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Create a `.env` file in the root directory and configure the following:
+   ```env
+   PORT=5000
+   MONGO_URI=your-mongo-uri
+   JWT_SECRET=your-secret-key
+   AWS_ACCESS_KEY_ID=your-access-key
+   AWS_SECRET_ACCESS_KEY=your-secret-access-key
+   AWS_BUCKET_NAME=your-bucket-name
+   ```
+5. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+## API Endpoints
+
+### User Routes
+- `POST /api/auth/signup`: Register a new user
+- `POST /api/auth/login`: Login a user
+- `GET /api/users/:id`: Get user profile
+
+### Video Routes
+- `POST /api/videos`: Upload a video
+- `GET /api/videos`: Fetch all videos
+- `GET /api/videos/:id`: Fetch video details
+- `PUT /api/videos/:id`: Update a video
+- `DELETE /api/videos/:id`: Delete a video
+
+### Comment Routes
+- `POST /api/comments`: Add a comment
+- `GET /api/comments/:videoId`: Fetch comments for a video
+- `PUT /api/comments/:id`: Update a comment
+- `DELETE /api/comments/:id`: Delete a comment
+
+### Subscription Routes
+- `POST /api/subscriptions`: Subscribe to a channel
+- `DELETE /api/subscriptions/:id`: Unsubscribe from a channel
+
+## Folder Structure
+
+```plaintext
+Backend Project/
+├── .env
+├── .gitignore
+├── .prettie
+├── .prettierignore
+├── package-lock.json
+├── package.json
+├── public/
+│   └── temp/
+│       └── .gitkeep
+├── Readme.md
+└── src/
+    ├── app.js
+    ├── constants.js
+    ├── index.js
+    ├── controllers/
+    ├── db/
+    ├── middlewares/
+    ├── models/
+    ├── routes/
+    └── utils/
+
+```
+
+## Future Enhancements
+- Add video recommendations based on user preferences.
+- Implement analytics for video views and engagement.
+- Build a front-end interface to consume the APIs.
+
+## Contributing
+
+Contributions are welcome! Please fork this repository and submit a pull request with your improvements.
 
 
-# 🛠 Tech Stack
+## Contact
 
-Backend: Node.js, Express.js
-
-Database: MongoDB
-
-Authentication: JWT (JSON Web Tokens)
-
-File Upload: Multer
-
-Environment Variables: dotenv
-
-
-# 📂 Folder Structure
-![image Description](assets/structure.jpg)
-
-<!-- YouTube-Clone-Backend/
-│-- src/
-│   ├── controllers/      # Handles business logic
-│   ├── models/           # Mongoose schemas
-│   ├── routes/           # API routes
-│   ├── middleware/       # Authentication & other middleware
-│   ├── config/           # Configuration files
-│-- uploads/              # Stores uploaded files
-│-- .env                  # Environment variables
-│-- app.js                # controll the port (http://localhost:..../api/v1/users/controllers):
-│-- index.js              # Entry point
-│-- package.json          # Dependencies -->
-
-# ⚙ Installation & Setup
-
-1. Clone the Repository
-
-git clone https://github.com/Sps9938/YouTube-Clone-Backend.git
-
-cd YouTube-Clone-Backend
-
-
-2. Install Dependencies
-
-npm install
-
-
-3. Create a .env File and Add:
-
-PORT=5000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret
-
-
-4. Run the Server
-
-npm start
-
+For questions or collaborations, feel free to reach out:
+- **Email**: your-email@example.com
+- **GitHub**: [github repository profile](https://github.com/Sps9938/YouTube-Clone-Backend)
