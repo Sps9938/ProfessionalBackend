@@ -3,27 +3,43 @@ Model structure of Youtube-Clone-Backend
 -[Model Structure (click to view)](https://app.eraser.io/workspace/YtPqZ1VogxGy1jzIDkzj)
 
 # Table of contents
-1. [Introduction](#project-overview)
+1. [Introduction](#introduction)
+
 2. [Features](#features)
+
 3. [Tech Stack](#tech-stack)
+
 4. [Installation](#installation)
+
 5. [Folder Structure](#folder-structure)
+
 6. [API Endpoints](#api-endpoints)
+
    - [User Routes](#user-routes)
+
    - [Video Routes](#video-routes)
+
    - [Like Routes](#like-routes)
+
    - [Comment Routes](#comment-routes)
+
    - [Subscription Routes](#subscription-routes)
+
    - [Playlist Routes](#playlist-routes)
+
    - [Dashboard Routes](#dashboard-routes)
+
 7. [Future Enhancements](#future-enhancements)
+
 8. [Contributing](#contributing)
+
 9. [Acknowledgement](#acknowledgement)
+
 10. [Contact](#contact)
 
 
 
-## Project-Overview
+## Introduction
 
 This project is a backend implementation of a YouTube-like platform. It provides core functionalities for managing users, videos, comments, likes, and subscriptions. The application is built to handle robust API interactions, ensuring scalability and reliability.
 
