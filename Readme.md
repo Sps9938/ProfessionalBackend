@@ -8,7 +8,7 @@ Model structure of Youtube-Clone-Backend
 3. [Tech Stack](#tech-stack)
 4. [Installation](#installation)
 5. [Folder Structure](#folder-structure)
-6. API Endpoints
+6. [API Endpoints](#api-endpoints)
    - [User Routes](#user-routes)
    - [Video Routes](#video-routes)
    - [Like Routes](#like-routes)
