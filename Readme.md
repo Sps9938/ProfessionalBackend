@@ -75,7 +75,7 @@ This project is a backend implementation of a YouTube-like platform. It provides
    npm install
    ```
 4. Create a `.env` file in the root directory and configure the following:
-   ```env
+   ```bash
     PORT = 8000
     MONGODB_URI = your-mongo-uri
     CORS_ORIGIN=*
