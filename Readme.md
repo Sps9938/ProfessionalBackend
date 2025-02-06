@@ -1,5 +1,5 @@
 # YouTube-Clone-Backend
-MOdel structure of Youtube-Clone-Backend
+Model structure of Youtube-Clone-Backend
 -[Model Structure (click to view)](https://app.eraser.io/workspace/YtPqZ1VogxGy1jzIDkzj)
 
 # Table of contents
