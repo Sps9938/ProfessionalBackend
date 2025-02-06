@@ -193,7 +193,7 @@ Contributions are welcome! Please fork this repository and submit a pull request
 
 ## Acknowledgement
 
-I would like to acknowledge and invite [Hitesh Choudhry] for their valuable guidance and support in this project. Their expertise will help improve the structure, performance, and best practices of the project.
+I would like to acknowledge and invite [Hitesh Choudhry Sir] for their valuable guidance and support in this project. Their expertise will help improve the structure, performance, and best practices of the project.
 
 Check out their YouTube channel for more insights and tutorials:
 ▶ [Chai Aur Code](https://www.youtube.com/@chaiaurcode)
