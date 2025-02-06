@@ -76,16 +76,16 @@ This project is a backend implementation of a YouTube-like platform. It provides
    ```
 4. Create a `.env` file in the root directory and configure the following:
    ```env
-PORT = 8000
-MONGODB_URI = your-mongo-uri
-CORS_ORIGIN=*
-ACCESS_TOKEN_SECRET= your <access token> secret
-ACCESS_TOKEN_EXPIRY=5d
-REFRESH_TOKEN_SECRET= your <refresh token> secret
-REFRESH_TOKEN_EXPIRY=10d
-CLOUDINARY_NAME = your <name>
-CLOUDINARY_API_KEY = your <api> key
-CLOUDINARY_API_SECRET = your <api> secret
+    PORT = 8000
+    MONGODB_URI = your-mongo-uri
+    CORS_ORIGIN=*
+    ACCESS_TOKEN_SECRET= your <access token> secret
+    ACCESS_TOKEN_EXPIRY=5d
+    REFRESH_TOKEN_SECRET= your <refresh token> secret
+    REFRESH_TOKEN_EXPIRY=10d
+    CLOUDINARY_NAME = your <name>
+    CLOUDINARY_API_KEY = your <api> key
+    CLOUDINARY_API_SECRET = your <api> secret
    ```
 5. Start the development server:
    ```bash
