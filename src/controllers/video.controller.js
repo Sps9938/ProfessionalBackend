@@ -520,7 +520,7 @@ const deleteVideo = asyncHandler(async (req, res) => {
             "video deleted Successfully"
         ))
 })
-
+//true->false, false->true
 const togglePublishStatus = asyncHandler(async (req, res) => {
     const { videoId } = req.params
 
