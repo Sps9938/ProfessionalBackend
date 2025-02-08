@@ -1,7 +1,7 @@
 {
   "name": "chai",
   "version": "1.0.0",
-  "description": "Engertic with enjoy to learn Youtube-Clone-Backend",
+  "description": "a chai aur backend",
   "main": "index.js",
   "type": "module",
   "scripts": {

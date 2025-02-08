@@ -153,7 +153,7 @@ Backend Project/
 - `GET /api/videos/:id`: Fetch video details
 - `PUT /api/videos/:id`: Update a video
 - `DELETE /api/videos/:id`: Delete a video
-- `PATCH /api/videos/toggle/publish/:videoId`: toggel status ->true->false, false->true
+- `PATCH /api/videos/toggle/publish/:videoId`: toggle status ->true->false, false->true
 
 ### Like-Routes
 - `PATCH /api/toggle/like/:id`: like or unlike controller
