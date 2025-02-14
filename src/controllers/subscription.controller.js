@@ -149,7 +149,7 @@ const getUserChannelSubscribers = asyncHandler(async(req, res) => {
    
 })
 
-//means admin wants to search those channel that has subscriber at laest 1
+//on the base of userId->who are subscribed -> take information 
 const getsubscribedChannels = asyncHandler(async(req, res) => {
     /*
     It gets a list of channels that the user has subscribed to, including:
