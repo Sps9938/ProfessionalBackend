@@ -186,7 +186,7 @@ Backend Project/
 - Add video recommendations based on user preferences.
 - Implement analytics for video views and engagement.
 - Build a front-end interface to consume the APIs.
-``````````````````````
+
 ## Contributing
 
 Contributions are welcome! Please fork this repository and submit a pull request with your improvements.
